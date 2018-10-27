@@ -10,4 +10,6 @@ public interface CartRepository {
     void updateProductCount(Long cartId, Long productId, Long productCount);
 
     void cartAddProduct(Long cartId, Long productId);
+
+    void deleteProduct(Long cartId, Long productId);
 }

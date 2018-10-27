@@ -19,7 +19,15 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    public void deleteProduct(Long cartId, Long productId) {
+        cartRepository.deleteProduct(cartId,productId);
+    }
+
+    @Override
     public void updateCart(Long cartId, Long productId, Long productCount) {
+        /*if(productCount == 0){
+            cartRepository.deleteProduct(cartId,productId);
+        }*/
         cartRepository.updateProductCount(cartId,productId,productCount);
     }
 

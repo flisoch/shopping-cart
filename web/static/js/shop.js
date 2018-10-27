@@ -11,7 +11,7 @@ function addToCart(productId, cartId) {
             "cart_id" : cartId,
         },
         success: function (msg) {
-            alert("successfully added to cart");
+            // alert("successfully added to cart");
         },
         error: function (msg) {
             alert('error');
@@ -19,17 +19,18 @@ function addToCart(productId, cartId) {
     });
 }
 
-function removeFromCart(productId){
-    let cartId = 1;
-    // let product = $("#product_" + productId);
+function removeFromCart(productId,cartId){
+
+    let product = $("#product_" + productId);
     $.ajax({
-        url: `/cart/remove/${cartId}`,
+        url: `/cart/delete/${cartId}`,
         type:"POST",
         data: {
             "product_id": productId,
+            "cart_id": cartId,
         },
         success: function (msg) {
-            alert("successfully removed from cart");
+            product.remove();
         },
         error: function (msg) {
             alert('error');
@@ -49,7 +50,7 @@ function updateCart(productId, cartId) {
             "product_count": count,
         },
         success: function (msg) {
-            alert("cart successfully updated");
+            // alert("cart successfully updated");
         },
         error: function (msg) {
             alert('error');

@@ -27,6 +27,7 @@ public class CartRepositoryImpl implements CartRepository {
             "INSERT INTO product_cart (cart_id, product_id)\n" +
             "SELECT ?, ?\n" +
             "WHERE NOT EXISTS (SELECT 2 FROM product_cart WHERE cart_id = ? AND product_id = ?);";
+    private static final String DELETE_PRODUCT = "DELETE FROM product_cart WHERE cart_id = ? AND product_id = ?";
 
 
     private RowMapper<Cart> cartRowMapper = (resultSet, i) -> Cart.builder()
@@ -49,6 +50,11 @@ public class CartRepositoryImpl implements CartRepository {
     @Override
     public void updateProductCount(Long cartId, Long productId, Long productCount) {
         jdbcTemplate.update(UPDATE_COUNT,productCount,cartId,productId);
+    }
+
+    @Override
+    public void deleteProduct(Long cartId, Long productId) {
+        jdbcTemplate.update(DELETE_PRODUCT,cartId,productId);
     }
 
     @SneakyThrows
