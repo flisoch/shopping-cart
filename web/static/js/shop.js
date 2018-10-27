@@ -4,9 +4,8 @@
 // let departure = $("#departure").val();
 //todo:define which cart to add
 
-function addToCart(productId) {
-    let cartId = 1;
-
+function addToCart(productId, cartId) {
+    cartId = 1;
     $.ajax({
         url: `/cart/${cartId}/new`,
         type:"POST",

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -47,59 +48,45 @@
 
           <div class="card-body">
 
-              <div class="row">
-                  <div class="col-xs-2 col-md-2">
-                      <img class="img-responsive" src="http://placehold.it/120x80" alt="prewiew">
-                  </div>
-                  <div class="col-xs-4 col-md-6">
-                      <h4 class="product-name"><strong>Product name${product.name}</strong></h4>
-                      <h4><small>Product description${product.description}</small></h4>
-                  </div>
-                  <div class="col-xs-6 col-md-4 row">
-                      <div class="col-xs-6 col-md-6 text-right" style="padding-top: 5px">
-                          <h6><strong>${product.price}25.00 <span class="text-muted">x</span></strong></h6>
-                      </div>
-                      <div class="col-xs-4 col-md-4">
-                          <input type="number" class="form-control input-sm" value="${product.count}1" onchange="updateCart()">
-                      </div>
-                      <div class="col-xs-2 col-md-2">
-                          <button type="button" class="btn btn-outline-danger btn-xs">
-                              <i class="fa fa-trash" aria-hidden="true"></i>
-                          </button>
-                      </div>
-                  </div>
-              </div>
-              <hr>
-              <div class="row" id="product_${product.id}">
-                  <div class="col-xs-2 col-md-2">
-                      <img class="img-responsive" src="http://placehold.it/120x80" alt="prewiew">
-                  </div>
-                  <div class="col-xs-4 col-md-6">
-                      <h4 class="product-name"><strong>${product.name}Product name</strong></h4>
-                      <h4><small>${product.description}Product description</small></h4>
-                  </div>
-                  <div class="col-xs-6 col-md-4 row">
-                      <div class="col-xs-6 col-md-6 text-right" style="padding-top: 5px">
-                          <h6><strong>${product.price}25.00 <span class="text-muted">x</span></strong></h6>
-                      </div>
-                      <div class="col-xs-4 col-md-4">
-                          <input type="number" class="form-control input-sm" value="${product.count}1" onchange="updateCart(${product.id})">
-                      </div>
-                      <div class="col-xs-2 col-md-2">
-                          <button type="button" class="btn btn-outline-danger btn-xs" onclick="removeFromCart(${product.id})">
-                              <i class="fa fa-trash" aria-hidden="true"></i>
-                          </button>
-                      </div>
-                  </div>
-              </div>
+                <c:if test="${products!=null}">
+                    <c:forEach var="product" items="${products}">
+
+                        <div class="row" id="product_${product.id}">
+                            <div class="col-xs-2 col-md-2">
+                                <img class="img-responsive" src="http://placehold.it/120x80" alt="prewiew">
+                            </div>
+                            <div class="col-xs-4 col-md-6">
+                                <h4 class="product-name"><strong>${product.name}</strong></h4>
+                                <h4><small>${product.description}</small></h4>
+                            </div>
+                            <div class="col-xs-6 col-md-4 row">
+                                <div class="col-xs-2 col-md-6 text-right" style="padding-top: 5px">
+                                    <h6><strong>$ ${product.price}  <span class="text-muted"> x </span></strong></h6>
+                                </div>
+                                <div class="col-xs-2 col-md-4">
+                                    <input type="number" class="form-control input-sm" value="${cart.productsCount.get(product.id)}" onchange="updateCart(${product.id})">
+                                </div>
+                                <div class="col-xs-2 col-md-2">
+                                    <button type="button" class="btn btn-outline-danger btn-xs" onclick="removeFromCart(${product.id})">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+
+                    </c:forEach>
+                </c:if>
+
+
 
               <hr>
               <div class="pull-right">
-                  <a href="{{route("product.home")}}" class="btn btn-outline-secondary pull-right">Aktualizovať košík</a>
+                  <a href="#" class="btn btn-outline-secondary pull-right">Aktualizovať košík</a>
               </div>
           </div>
           <div class="card-footer">
-              <a href="{{route("product.home")}}" class="btn btn-success pull-right">Objednať</a>
+              <a href="#" class="btn btn-success pull-right">Objednať</a>
               <div class="pull-right" style="margin: 5px">
                   Celková cena: <b>50.00€</b>
               </div>

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: flisoch
@@ -16,10 +17,10 @@
     <script src="/static/js/shop.js"    defer></script>
 
     <style>
-        .card {
+        /*.card {
             display: inline-block;
             max-width: 32%;
-        }
+        }*/
         body {
             margin-top: 72px;
             background-color: #f5f5f5;
@@ -51,21 +52,21 @@
 
             <!-- CONTENT -->
 
-            <div class="card" id="product_${product.id}">
-                <h5 class="card-header">
-                    <a href="/products/${product.id}">Product N${product.id}</a>
-                </h5>
+            <c:forEach var="product" items="${products}">
 
-                <div class="card-body">
-                    <h5 class="card-title">${product.name}Product name</h5>
-                    <p class="card-text">
-                        product info
-                          ${product.info}
+                    <div class="card" id="product_${product.id}">
+                        <h5 class="card-header">
+                            <a href="/products/${product.id}">${product.id}</a>
+                        </h5>
 
-                    </p>
-                    <button onclick="addToCart(${product.id})" class="btn btn-primary">Add to cart</button>
-                </div>
-            </div>
+                        <div class="card-body">
+                            <h5 class="card-title">${product.name}</h5>
+                            <p class="card-text">${product.description}</p>
+                            <button onclick="addToCart(${product.id},${cart.id})" class="btn btn-primary">Add to cart</button>
+                        </div>
+                    </div>
+
+            </c:forEach>
 
             <!-- /CONTENT -->
 
