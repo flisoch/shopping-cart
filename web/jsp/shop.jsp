@@ -16,6 +16,9 @@
     <script src="/static/js/bootstrap.min.js"    defer></script>
     <script src="/static/js/shop.js"    defer></script>
 
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <style>
         /*.card {
             display: inline-block;
@@ -26,6 +29,18 @@
             background-color: #f5f5f5;
         }
 
+        #itemCount {
+            position: absolute;
+            top: 1px;
+            left: 250px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: red;
+            color: white;
+            text-align: center;
+        }
+
     </style>
 </head>
 <body>
@@ -34,14 +49,14 @@
 
     <div class="container fixed-top">
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
+            <div class="container col-6">
                 <a class="navbar-brand" href="/cart">Your shopping cart</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+
+                <i class="fa fa-shopping-cart fa-2x col-9" aria-hidden="true" style="color:white"></i>
+                <span id="itemCount">${count}</span>
 
             </div>
+
         </nav>
     </div>
 
@@ -62,7 +77,7 @@
                         <div class="card-body">
                             <h5 class="card-title">${product.name}</h5>
                             <p class="card-text">${product.description}</p>
-                            <button onclick="addToCart(${product.id},${cart.id})" class="btn btn-primary">Add to cart</button>
+                            <button onclick="addToCart(${product.id},${cart.id})"  class="btn btn-primary">Add to cart</button>
                         </div>
                     </div>
 

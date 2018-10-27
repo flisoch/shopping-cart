@@ -36,6 +36,8 @@ public class ShopServlet extends HttpServlet {
 
         List<Product> products = productService.getProducts();
         Cart cart = cartService.getOrCreateCart(request, response);
+        int count = cart.getProductsCount().values().stream().reduce(0, (Integer a,Integer b) -> a + b);
+        request.setAttribute("count", count);
         request.setAttribute("products",products);
         request.setAttribute("cart",cart);
         request.getRequestDispatcher("/jsp/shop.jsp").forward(request, response);

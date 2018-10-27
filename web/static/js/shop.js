@@ -3,6 +3,11 @@
 
 
 function addToCart(productId, cartId) {
+
+    var itemCount = $('#itemCount').html();
+    itemCount ++;
+    $('#itemCount').html(itemCount).css('display', 'block');
+
     $.ajax({
         url: `/cart/update/${cartId}`,
         type:"POST",
