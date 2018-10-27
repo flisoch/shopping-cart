@@ -1,5 +1,6 @@
 package ru.itis.cart.repositories;
 
+import lombok.SneakyThrows;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -9,6 +10,7 @@ import ru.itis.cart.entities.Cart;
 import ru.itis.cart.entities.Product;
 import ru.itis.cart.helpers.Pair;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +22,11 @@ public class CartRepositoryImpl implements CartRepository {
     private static final String SQL_INSERT = "INSERT into cart(hash_user) values (?)";
     private static final String SQL_SELECT_BY_HASH_USER = "SELECT * FROM cart WHERE hash_user = ?";
     private static final String SELECT_PRODUCT_COUNT = "SELECT cart_id, hash_user,product_id, count FROM product_cart AS pc JOIN cart AS c on pc.cart_id = c.id WHERE c.hash_user = ?";
+    private static final String UPDATE_COUNT = "UPDATE product_cart SET count = ? WHERE cart_id = ? AND product_id = ?";
+    private static final String ADD_PRODUCT = "UPDATE product_cart SET count=count + 1 WHERE cart_id = ? AND product_id = ?;\n" +
+            "INSERT INTO product_cart (cart_id, product_id)\n" +
+            "SELECT ?, ?\n" +
+            "WHERE NOT EXISTS (SELECT 2 FROM product_cart WHERE cart_id = ? AND product_id = ?);";
 
 
     private RowMapper<Cart> cartRowMapper = (resultSet, i) -> Cart.builder()
@@ -37,6 +44,27 @@ public class CartRepositoryImpl implements CartRepository {
     JdbcTemplate jdbcTemplate;
     public CartRepositoryImpl(DriverManagerDataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
+    }
+
+    @Override
+    public void updateProductCount(Long cartId, Long productId, Long productCount) {
+        jdbcTemplate.update(UPDATE_COUNT,productCount,cartId,productId);
+    }
+
+    @SneakyThrows
+    @Override
+    public void cartAddProduct(Long cartId, Long productId) {
+        Connection connection = jdbcTemplate.getDataSource().getConnection();
+        PreparedStatement statement = connection.prepareStatement(ADD_PRODUCT);
+        statement.setLong(1,cartId);
+        statement.setLong(2,productId);
+        statement.setLong(3,cartId);
+        statement.setLong(4,productId);
+        statement.setLong(5,cartId);
+        statement.setLong(6,productId);
+        statement.execute();
+//        jdbcTemplate.update(ADD_PRODUCT,cartId,productId);
+
     }
 
     @Override

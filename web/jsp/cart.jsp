@@ -64,10 +64,10 @@
                                     <h6><strong>$ ${product.price}  <span class="text-muted"> x </span></strong></h6>
                                 </div>
                                 <div class="col-xs-2 col-md-4">
-                                    <input type="number" class="form-control input-sm" value="${cart.productsCount.get(product.id)}" onchange="updateCart(${product.id})">
+                                    <input type="number" id="product_${product.id}_number" class="form-control input-sm" value="${cart.productsCount.get(product.id)}" onchange="updateCart(${product.id},${cart.id})">
                                 </div>
                                 <div class="col-xs-2 col-md-2">
-                                    <button type="button" class="btn btn-outline-danger btn-xs" onclick="removeFromCart(${product.id})">
+                                    <button type="button" class="btn btn-outline-danger btn-xs" onclick="removeFromCart(${product.id},${cart.id})">
                                         <i class="fa fa-trash" aria-hidden="true"></i>
                                     </button>
                                 </div>

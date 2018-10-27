@@ -19,6 +19,16 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    public void updateCart(Long cartId, Long productId, Long productCount) {
+        cartRepository.updateProductCount(cartId,productId,productCount);
+    }
+
+    @Override
+    public void cartAddProduct(Long cartId, Long productId) {
+        cartRepository.cartAddProduct(cartId,productId);
+    }
+
+    @Override
     public Cart getOrCreateCart(HttpServletRequest request, HttpServletResponse response) {
         Cart cart = null;
         if(request.getCookies() != null){

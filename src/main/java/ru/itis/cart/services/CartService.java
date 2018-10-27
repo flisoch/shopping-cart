@@ -7,4 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface CartService {
     Cart getOrCreateCart(HttpServletRequest request, HttpServletResponse response);
+
+    void updateCart(Long cartId, Long productId, Long productCount);
+
+    void cartAddProduct(Long cartId, Long productId);
 }

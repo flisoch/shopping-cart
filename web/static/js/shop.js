@@ -1,17 +1,14 @@
 
 
 
-// let departure = $("#departure").val();
-//todo:define which cart to add
 
 function addToCart(productId, cartId) {
-    cartId = 1;
     $.ajax({
-        url: `/cart/${cartId}/new`,
+        url: `/cart/update/${cartId}`,
         type:"POST",
         data: {
             "product_id": productId,
-
+            "cart_id" : cartId,
         },
         success: function (msg) {
             alert("successfully added to cart");
@@ -26,7 +23,7 @@ function removeFromCart(productId){
     let cartId = 1;
     // let product = $("#product_" + productId);
     $.ajax({
-        url: `/cart/${cartId}/remove`,
+        url: `/cart/remove/${cartId}`,
         type:"POST",
         data: {
             "product_id": productId,
@@ -40,14 +37,14 @@ function removeFromCart(productId){
     });
 }
 
-function updateCart(productId) {
-    let cartId = 1;
-    // let product = $("#product_" + productId);
-    let count = 1;
+function updateCart(productId, cartId) {
+
+    let count = $(`#product_${productId}_number`).val();
     $.ajax({
-        url: `/cart/${cartId}/update`,
+        url: `/cart/update/${cartId}`,
         type:"POST",
         data: {
+            "cart_id":cartId,
             "product_id": productId,
             "product_count": count,
         },
